@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anticip Finance — Gérez votre patrimoine en local</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:    #1976D2;
+    --primary-lt: rgba(25,118,210,0.08);
+    --savings:    #7B1FA2;
+    --success:    #388E3C;
+    --warning:    #F57C00;
+    --danger:     #D32F2F;
+    --bg:         #FAFAFA;
+    --surface:    #FFFFFF;
+    --border:     #E0E0E0;
+    --text:       #424242;
+    --text2:      #757575;
+    --text3:      #9E9E9E;
+    --win:        #0078D4;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'IBM Plex Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+  .top-bar { background:var(--surface); border-bottom:1px solid var(--border); padding:0 48px; height:56px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10; }
+  @media(max-width:640px){.top-bar{padding:0 20px;}}
+  .logo { font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:500; color:var(--text); letter-spacing:0.04em; }
+  .logo span { color:var(--primary); }
+  .top-badge { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--success); background:rgba(56,142,60,0.08); border:1px solid rgba(56,142,60,0.2); padding:4px 10px; border-radius:100px; display:flex; align-items:center; gap:6px; }
+  .dot-live { width:6px; height:6px; border-radius:50%; background:var(--success); animation:pulse 2s ease-in-out infinite; }
+
+  .hero { max-width:1080px; margin:0 auto; padding:72px 48px 56px; display:grid; grid-template-columns:1fr 420px; gap:64px; align-items:start; }
+  @media(max-width:900px){.hero{grid-template-columns:1fr;gap:48px;padding:48px 20px 40px;}}
+  .hero-left { animation:fadeUp 0.6s 0.05s ease both; }
+  .tag { display:inline-flex; align-items:center; gap:8px; background:var(--primary-lt); border:1px solid rgba(25,118,210,0.2); color:var(--primary); font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:5px 12px; border-radius:4px; margin-bottom:24px; }
+  h1 { font-family:'Lora',serif; font-size:clamp(36px,4.5vw,58px); font-weight:400; line-height:1.12; color:var(--text); margin-bottom:20px; letter-spacing:-0.01em; }
+  h1 em { font-style:italic; color:var(--primary); }
+  .hero-desc { font-size:16px; line-height:1.75; color:var(--text2); font-weight:300; max-width:440px; margin-bottom:36px; }
+  .privacy-pill { display:inline-flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border); border-radius:100px; padding:8px 16px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text2); margin-bottom:36px; }
+  .privacy-pill svg { color:var(--success); flex-shrink:0; }
+  .modules { display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:420px; }
+  .module { display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--text); }
+  .module-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .d-blue{background:var(--primary);} .d-purple{background:var(--savings);} .d-green{background:var(--success);} .d-orange{background:var(--warning);}
+
+  .hero-right { animation:fadeUp 0.6s 0.15s ease both; }
+  .version-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+  .version-chip { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); }
+  .version-chip b { color:var(--text2); }
+
+  .dl-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 22px; margin-bottom:12px; transition:box-shadow 0.2s,border-color 0.2s; position:relative; overflow:hidden; }
+  .dl-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+  .dl-card.mac::after { background:var(--primary); }
+  .dl-card.win::after { background:var(--win); }
+  .dl-card:hover { box-shadow:0 4px 24px rgba(0,0,0,0.08); border-color:#BDBDBD; }
+  .dl-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .dl-os { font-family:'Lora',serif; font-size:18px; font-weight:400; display:flex; align-items:center; gap:8px; }
+  .dl-os-sub { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text3); border:1px solid var(--border); padding:2px 7px; border-radius:3px; font-style:normal; }
+  .dl-format { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); margin-bottom:14px; min-height:16px; display:flex; flex-wrap:wrap; gap:4px; }
+  .dl-format a { color:var(--text3); text-decoration:none; transition:color 0.15s; }
+  .dl-format a:hover { color:var(--text); text-decoration:underline; }
+  .dl-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:11px 18px; border-radius:6px; border:none; cursor:pointer; font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:500; text-decoration:none; transition:all 0.15s; margin-bottom:6px; }
+  .dl-card.mac .dl-btn.primary { background:var(--primary); color:#fff; }
+  .dl-card.win .dl-btn.primary { background:var(--win); color:#fff; }
+  .dl-btn.primary:hover { filter:brightness(1.1); transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+  .dl-btn.secondary { background:transparent; border:1px solid var(--border); color:var(--text2); }
+  .dl-btn.secondary:hover { border-color:var(--text3); color:var(--text); }
+  .loading-state { display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); padding:10px 0; }
+  .spinner { width:12px; height:12px; border:1.5px solid var(--border); border-top-color:var(--primary); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0; }
+
+  .section { max-width:1080px; margin:0 auto; padding:0 48px 64px; animation:fadeUp 0.6s 0.25s ease both; }
+  @media(max-width:640px){.section{padding:0 20px 48px;}}
+  .section-label { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--text3); margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+  .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+  .features { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  @media(max-width:900px){.features{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:480px){.features{grid-template-columns:1fr;}}
+  .feature { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:22px 20px; }
+  .feature-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; font-size:16px; }
+  .icon-blue{background:rgba(25,118,210,0.1);} .icon-purple{background:rgba(123,31,162,0.1);} .icon-green{background:rgba(56,142,60,0.1);} .icon-orange{background:rgba(245,124,0,0.1);}
+  .feature-title { font-size:14px; font-weight:500; margin-bottom:8px; color:var(--text); }
+  .feature-desc { font-size:12px; line-height:1.65; color:var(--text2); font-weight:300; }
+
+  footer { background:var(--surface); border-top:1px solid var(--border); padding:20px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  @media(max-width:640px){footer{padding:20px;}}
+  .footer-links { display:flex; gap:20px; flex-wrap:wrap; }
+  .footer-links a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); text-decoration:none; display:flex; align-items:center; gap:5px; transition:color 0.15s; }
+  .footer-links a:hover { color:var(--text); }
+  .footer-copy { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--border); letter-spacing:0.05em; }
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">Anticip<span>.</span>Finance</div>
+  <div class="top-badge"><div class="dot-live"></div>Données 100% locales</div>
+</div>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="tag">Application de bureau · macOS &amp; Windows</div>
+    <h1>Votre patrimoine,<br><em>entièrement</em><br>sous votre contrôle.</h1>
+    <p class="hero-desc">Budget, épargne, investissements et objectifs patrimoniaux dans une seule application — sans serveur, sans cloud, sans abonnement.</p>
+    <div class="privacy-pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Vos données ne quittent jamais votre appareil
+    </div>
+    <div class="modules">
+      <div class="module"><div class="module-dot d-blue"></div>Budget</div>
+      <div class="module"><div class="module-dot d-purple"></div>Épargne</div>
+      <div class="module"><div class="module-dot d-green"></div>Investissements</div>
+      <div class="module"><div class="module-dot d-orange"></div>Objectifs</div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="version-row">
+      <div class="version-chip">Version <b id="version-label">—</b></div>
+      <div class="version-chip">·</div>
+      <div class="version-chip">Mis à jour le <b id="release-date">—</b></div>
+    </div>
+    <div class="dl-card mac">
+      <div class="dl-header"><div class="dl-os">macOS <span class="dl-os-sub">Apple Silicon · Intel</span></div></div>
+      <div class="dl-format" id="mac-formats"><span class="spinner" style="width:10px;height:10px;margin-right:4px"></span></div>
+      <div id="mac-buttons"><div class="loading-state"><span class="spinner"></span>Chargement…</div></div>
+    </div>
+    <div class="dl-card win">
+      <div class="dl-header"><div class="dl-os">Windows <span class="dl-os-sub">x64</span></div></div>
+      <div class="dl-format" id="win-formats"><span class="spinner" style="width:10px;height:10px;margin-right:4px"></span></div>
+      <div id="win-buttons"><div class="loading-state"><span class="spinner"></span>Chargement…</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Fonctionnalités</div>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon icon-blue">📊</div>
+      <div class="feature-title">Budget</div>
+      <div class="feature-desc">Enveloppes mensuelles, import CSV/PDF, suivi créances et découpage de transactions.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon icon-purple">💜</div>
+      <div class="feature-title">Épargne</div>
+      <div class="feature-desc">Livret A, LDDS, LEP — évolution graphique et liaison automatique aux objectifs.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon icon-green">📈</div>
+      <div class="feature-title">Investissements</div>
+      <div class="feature-desc">PEA, CTO, crowdfunding — TRI, MOIC et cash-on-cash calculés sur vos flux réels.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon icon-orange">🎯</div>
+      <div class="feature-title">Objectifs</div>
+      <div class="feature-desc">Projets patrimoniaux avec répartition automatique de l'épargne entre vos objectifs.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/joseph-solier/anticip_finance_releases" target="_blank">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      Releases
+    </a>
+    <a href="https://github.com/joseph-solier/anticip_finance_releases/issues" target="_blank">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Signaler un bug
+    </a>
+  </div>
+  <div class="footer-copy">Anticip Finance · Flutter · macOS &amp; Windows</div>
+</footer>
+
+<script>
+const GITHUB_USER='joseph-solier',GITHUB_REPO='anticip_finance_releases';
+const OS_PATTERNS={mac:[{ext:'.dmg',label:'macOS DMG',primary:true},{ext:'-macOS.zip',label:'macOS ZIP',primary:false}],win:[{ext:'-Windows.zip',label:'Windows ZIP',primary:true},{ext:'.exe',label:'Installeur .exe',primary:true}]};
+function formatDate(iso){return new Date(iso).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}
+function buildButtons(cid,fid,assets,patterns){
+  const c=document.getElementById(cid),f=document.getElementById(fid),m=[];
+  for(const a of assets)for(const p of patterns){if(a.name.toLowerCase().endsWith(p.ext.toLowerCase())){m.push({...p,url:a.browser_download_url,size:a.size});break;}}
+  if(!m.length){c.innerHTML='<div class="loading-state">Aucun fichier trouvé</div>';f.textContent='—';return;}
+  f.innerHTML=m.map(x=>`<a href="${x.url}">${x.label} · ${(x.size/1024/1024).toFixed(1)} Mo</a>`).join('<span style="margin:0 4px;color:var(--border)">·</span>');
+  c.innerHTML=m.map(x=>`<a class="dl-btn ${x.primary?'primary':'secondary'}" href="${x.url}" download><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Télécharger ${x.label}</a>`).join('');
+}
+async function loadRelease(){
+  try{
+    const r=await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases/latest`,{headers:{'Accept':'application/vnd.github+json'}});
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    const d=await r.json();
+    document.getElementById('version-label').textContent=d.tag_name;
+    document.getElementById('release-date').textContent=formatDate(d.published_at);
+    buildButtons('mac-buttons','mac-formats',d.assets||[],OS_PATTERNS.mac);
+    buildButtons('win-buttons','win-formats',d.assets||[],OS_PATTERNS.win);
+  }catch(e){
+    document.getElementById('version-label').textContent='—';
+    ['mac-buttons','win-buttons'].forEach(id=>{document.getElementById(id).innerHTML=`<div class="loading-state" style="color:var(--danger)">${e.message}</div>`;});
+  }
+}
+loadRelease();
+</script>
+</body>
+</html>
