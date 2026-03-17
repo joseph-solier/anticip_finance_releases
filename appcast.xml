@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.sparkle-project.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Anticip Finance Updates</title>
+    <description>Automatic updates for Anticip Finance</description>
+    <language>fr</language>
+    <item>
+      <title>Version 1.3.0</title>
+      <pubDate>Tue, 17 Mar 2026 10:52:04 +0000</pubDate>
+      <sparkle:version>1.3.0</sparkle:version>
+      <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>10.14</sparkle:minimumSystemVersion>
+      <enclosure url="https://github.com/joseph-solier/anticip_finance_releases/releases/download/v1.3.0/AnticipFinance-macOS.dmg" length="42224363" type="application/octet-stream"/>
+    </item>
+  </channel>
+</rss>
