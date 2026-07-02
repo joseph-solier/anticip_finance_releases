@@ -4,93 +4,96 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anticip Finance — Gérez votre patrimoine en local</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary:    #1976D2;
-    --primary-lt: rgba(25,118,210,0.08);
-    --savings:    #7B1FA2;
-    --success:    #388E3C;
-    --warning:    #F57C00;
-    --danger:     #D32F2F;
-    --bg:         #FAFAFA;
+    /* Design System Anticip (proto anticip-design) */
+    --font:       -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    --ink:        #1B2540;
+    --bg:         #EEF3FB;
     --surface:    #FFFFFF;
-    --border:     #E0E0E0;
-    --text:       #424242;
-    --text2:      #757575;
-    --text3:      #9E9E9E;
-    --win:        #0078D4;
+    --border:     #E3E9F3;
+    --muted:      #7B849B;
+    --soft:       #A9B2C6;
+    --accent:     #5B8DEF;
+    --accent-d:   #2F62C4;
+    --accent-lt:  rgba(91,141,239,0.10);
+    --pos:        #3FA37C;
+    --neg:        #E08268;
+    --slate:      #6C8BB8;
+    /* alias sémantiques */
+    --text:       var(--ink);
+    --text2:      var(--muted);
+    --text3:      var(--soft);
+    --success:    var(--pos);
+    --danger:     var(--neg);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
-  body { font-family:'IBM Plex Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+  body { font-family:var(--font); background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
 
   .top-bar { background:var(--surface); border-bottom:1px solid var(--border); padding:0 48px; height:56px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10; }
   @media(max-width:640px){.top-bar{padding:0 20px;}}
-  .logo { font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:500; color:var(--text); letter-spacing:0.04em; }
-  .logo span { color:var(--primary); }
-  .top-badge { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--success); background:rgba(56,142,60,0.08); border:1px solid rgba(56,142,60,0.2); padding:4px 10px; border-radius:100px; display:flex; align-items:center; gap:6px; }
-  .dot-live { width:6px; height:6px; border-radius:50%; background:var(--success); animation:pulse 2s ease-in-out infinite; }
+  .logo { font-size:14px; font-weight:600; color:var(--ink); letter-spacing:0.02em; }
+  .logo span { color:var(--accent); }
+  .top-badge { font-size:11px; font-weight:500; color:var(--pos); background:rgba(63,163,124,0.10); border:1px solid rgba(63,163,124,0.25); padding:4px 11px; border-radius:100px; display:flex; align-items:center; gap:6px; }
+  .dot-live { width:6px; height:6px; border-radius:50%; background:var(--pos); animation:pulse 2s ease-in-out infinite; }
 
   .hero { max-width:1080px; margin:0 auto; padding:72px 48px 56px; display:grid; grid-template-columns:1fr 420px; gap:64px; align-items:start; }
   @media(max-width:900px){.hero{grid-template-columns:1fr;gap:48px;padding:48px 20px 40px;}}
   .hero-left { animation:fadeUp 0.6s 0.05s ease both; }
-  .tag { display:inline-flex; align-items:center; gap:8px; background:var(--primary-lt); border:1px solid rgba(25,118,210,0.2); color:var(--primary); font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:5px 12px; border-radius:4px; margin-bottom:24px; }
-  h1 { font-family:'Lora',serif; font-size:clamp(36px,4.5vw,58px); font-weight:400; line-height:1.12; color:var(--text); margin-bottom:20px; letter-spacing:-0.01em; }
-  h1 em { font-style:italic; color:var(--primary); }
-  .hero-desc { font-size:16px; line-height:1.75; color:var(--text2); font-weight:300; max-width:440px; margin-bottom:36px; }
-  .privacy-pill { display:inline-flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border); border-radius:100px; padding:8px 16px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text2); margin-bottom:36px; }
-  .privacy-pill svg { color:var(--success); flex-shrink:0; }
+  .tag { display:inline-flex; align-items:center; gap:8px; background:var(--accent-lt); border:1px solid rgba(91,141,239,0.25); color:var(--accent-d); font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:6px 12px; border-radius:100px; margin-bottom:24px; }
+  h1 { font-size:clamp(36px,4.6vw,56px); font-weight:700; line-height:1.1; color:var(--ink); margin-bottom:20px; letter-spacing:-0.02em; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-desc { font-size:16px; line-height:1.7; color:var(--muted); font-weight:400; max-width:440px; margin-bottom:32px; }
+  .privacy-pill { display:inline-flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border); border-radius:100px; padding:8px 16px; font-size:12px; font-weight:500; color:var(--muted); margin-bottom:36px; }
+  .privacy-pill svg { color:var(--pos); flex-shrink:0; }
   .modules { display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:420px; }
-  .module { display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--text); }
+  .module { display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:11px 14px; font-size:13px; font-weight:500; color:var(--ink); }
   .module-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-  .d-blue{background:var(--primary);} .d-purple{background:var(--savings);} .d-green{background:var(--success);} .d-orange{background:var(--warning);}
+  .d-accent{background:var(--accent);} .d-slate{background:var(--slate);} .d-green{background:var(--pos);} .d-orange{background:var(--neg);}
 
   .hero-right { animation:fadeUp 0.6s 0.15s ease both; }
-  .version-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
-  .version-chip { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); }
-  .version-chip b { color:var(--text2); }
+  .version-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+  .version-chip { font-size:11.5px; font-weight:500; color:var(--soft); }
+  .version-chip b { color:var(--muted); font-weight:600; }
 
-  .dl-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 22px; margin-bottom:12px; transition:box-shadow 0.2s,border-color 0.2s; position:relative; overflow:hidden; }
-  .dl-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
-  .dl-card.mac::after { background:var(--primary); }
-  .dl-card.win::after { background:var(--win); }
-  .dl-card:hover { box-shadow:0 4px 24px rgba(0,0,0,0.08); border-color:#BDBDBD; }
+  .dl-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 22px; margin-bottom:12px; transition:box-shadow 0.2s,border-color 0.2s,transform 0.2s; position:relative; overflow:hidden; }
+  .dl-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:14px 14px 0 0; background:var(--accent); }
+  .dl-card:hover { box-shadow:0 8px 28px rgba(27,37,64,0.10); border-color:var(--accent); transform:translateY(-1px); }
   .dl-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-  .dl-os { font-family:'Lora',serif; font-size:18px; font-weight:400; display:flex; align-items:center; gap:8px; }
-  .dl-os-sub { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text3); border:1px solid var(--border); padding:2px 7px; border-radius:3px; font-style:normal; }
-  .dl-format { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); margin-bottom:14px; min-height:16px; display:flex; flex-wrap:wrap; gap:4px; }
-  .dl-format a { color:var(--text3); text-decoration:none; transition:color 0.15s; }
-  .dl-format a:hover { color:var(--text); text-decoration:underline; }
-  .dl-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:11px 18px; border-radius:6px; border:none; cursor:pointer; font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:500; text-decoration:none; transition:all 0.15s; margin-bottom:6px; }
-  .dl-card.mac .dl-btn.primary { background:var(--primary); color:#fff; }
-  .dl-card.win .dl-btn.primary { background:var(--win); color:#fff; }
-  .dl-btn.primary:hover { filter:brightness(1.1); transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
-  .dl-btn.secondary { background:transparent; border:1px solid var(--border); color:var(--text2); }
-  .dl-btn.secondary:hover { border-color:var(--text3); color:var(--text); }
-  .loading-state { display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); padding:10px 0; }
-  .spinner { width:12px; height:12px; border:1.5px solid var(--border); border-top-color:var(--primary); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0; }
+  .dl-os { font-size:18px; font-weight:600; color:var(--ink); display:flex; align-items:center; gap:9px; }
+  .dl-os-sub { font-size:10px; font-weight:500; color:var(--soft); border:1px solid var(--border); padding:3px 8px; border-radius:100px; letter-spacing:0.03em; }
+  .dl-format { font-size:11px; font-weight:500; color:var(--soft); margin-bottom:14px; min-height:16px; display:flex; flex-wrap:wrap; gap:4px; }
+  .dl-format a { color:var(--soft); text-decoration:none; transition:color 0.15s; }
+  .dl-format a:hover { color:var(--accent-d); text-decoration:underline; }
+  .dl-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:12px 18px; border-radius:11px; border:none; cursor:pointer; font-family:var(--font); font-size:13.5px; font-weight:600; text-decoration:none; transition:all 0.15s; margin-bottom:6px; }
+  .dl-btn.primary { background:var(--accent); color:#fff; }
+  .dl-btn.primary:hover { background:var(--accent-d); transform:translateY(-1px); box-shadow:0 6px 16px rgba(47,98,196,0.28); }
+  .dl-btn.secondary { background:transparent; border:1px solid var(--border); color:var(--muted); }
+  .dl-btn.secondary:hover { border-color:var(--slate); color:var(--ink); }
+  .loading-state { display:flex; align-items:center; gap:8px; font-size:11.5px; font-weight:500; color:var(--soft); padding:10px 0; }
+  .spinner { width:12px; height:12px; border:1.5px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0; }
 
   .section { max-width:1080px; margin:0 auto; padding:0 48px 64px; animation:fadeUp 0.6s 0.25s ease both; }
   @media(max-width:640px){.section{padding:0 20px 48px;}}
-  .section-label { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--text3); margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+  .section-label { font-size:10px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--soft); margin-bottom:20px; display:flex; align-items:center; gap:12px; }
   .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
   .features { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
   @media(max-width:900px){.features{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:480px){.features{grid-template-columns:1fr;}}
-  .feature { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:22px 20px; }
-  .feature-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; font-size:16px; }
-  .icon-blue{background:rgba(25,118,210,0.1);} .icon-purple{background:rgba(123,31,162,0.1);} .icon-green{background:rgba(56,142,60,0.1);} .icon-orange{background:rgba(245,124,0,0.1);}
-  .feature-title { font-size:14px; font-weight:500; margin-bottom:8px; color:var(--text); }
-  .feature-desc { font-size:12px; line-height:1.65; color:var(--text2); font-weight:300; }
+  .feature { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 20px; transition:box-shadow 0.2s,transform 0.2s; }
+  .feature:hover { box-shadow:0 8px 28px rgba(27,37,64,0.08); transform:translateY(-1px); }
+  .feature-icon { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; font-size:17px; }
+  .icon-accent{background:var(--accent-lt);} .icon-slate{background:rgba(108,139,184,0.12);} .icon-green{background:rgba(63,163,124,0.12);} .icon-orange{background:rgba(224,130,104,0.12);}
+  .feature-title { font-size:14px; font-weight:600; margin-bottom:8px; color:var(--ink); }
+  .feature-desc { font-size:12.5px; line-height:1.6; color:var(--muted); font-weight:400; }
 
   footer { background:var(--surface); border-top:1px solid var(--border); padding:20px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
   @media(max-width:640px){footer{padding:20px;}}
   .footer-links { display:flex; gap:20px; flex-wrap:wrap; }
-  .footer-links a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); text-decoration:none; display:flex; align-items:center; gap:5px; transition:color 0.15s; }
-  .footer-links a:hover { color:var(--text); }
-  .footer-copy { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--border); letter-spacing:0.05em; }
+  .footer-links a { font-size:11.5px; font-weight:500; color:var(--soft); text-decoration:none; display:flex; align-items:center; gap:5px; transition:color 0.15s; }
+  .footer-links a:hover { color:var(--accent-d); }
+  .footer-copy { font-size:11px; font-weight:500; color:var(--soft); letter-spacing:0.02em; }
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
   @keyframes spin{to{transform:rotate(360deg);}}
@@ -106,7 +109,7 @@
 
 <div class="hero">
   <div class="hero-left">
-    <div class="tag">Application de bureau · macOS &amp; Windows</div>
+    <div class="tag">Application de bureau · macOS</div>
     <h1>Votre patrimoine,<br><em>entièrement</em><br>sous votre contrôle.</h1>
     <p class="hero-desc">Budget, épargne, investissements et objectifs patrimoniaux dans une seule application — sans serveur, sans cloud, sans abonnement.</p>
     <div class="privacy-pill">
@@ -114,8 +117,8 @@
       Vos données ne quittent jamais votre appareil
     </div>
     <div class="modules">
-      <div class="module"><div class="module-dot d-blue"></div>Budget</div>
-      <div class="module"><div class="module-dot d-purple"></div>Épargne</div>
+      <div class="module"><div class="module-dot d-accent"></div>Budget</div>
+      <div class="module"><div class="module-dot d-slate"></div>Épargne</div>
       <div class="module"><div class="module-dot d-green"></div>Investissements</div>
       <div class="module"><div class="module-dot d-orange"></div>Objectifs</div>
     </div>
@@ -132,11 +135,6 @@
       <div class="dl-format" id="mac-formats"><span class="spinner" style="width:10px;height:10px;margin-right:4px"></span></div>
       <div id="mac-buttons"><div class="loading-state"><span class="spinner"></span>Chargement…</div></div>
     </div>
-    <div class="dl-card win">
-      <div class="dl-header"><div class="dl-os">Windows <span class="dl-os-sub">x64</span></div></div>
-      <div class="dl-format" id="win-formats"><span class="spinner" style="width:10px;height:10px;margin-right:4px"></span></div>
-      <div id="win-buttons"><div class="loading-state"><span class="spinner"></span>Chargement…</div></div>
-    </div>
   </div>
 </div>
 
@@ -144,12 +142,12 @@
   <div class="section-label">Fonctionnalités</div>
   <div class="features">
     <div class="feature">
-      <div class="feature-icon icon-blue">📊</div>
+      <div class="feature-icon icon-accent">📊</div>
       <div class="feature-title">Budget</div>
       <div class="feature-desc">Enveloppes mensuelles, import CSV/PDF, suivi créances et découpage de transactions.</div>
     </div>
     <div class="feature">
-      <div class="feature-icon icon-purple">💜</div>
+      <div class="feature-icon icon-slate">🏦</div>
       <div class="feature-title">Épargne</div>
       <div class="feature-desc">Livret A, LDDS, LEP — évolution graphique et liaison automatique aux objectifs.</div>
     </div>
@@ -177,18 +175,18 @@
       Signaler un bug
     </a>
   </div>
-  <div class="footer-copy">Anticip Finance · Flutter · macOS &amp; Windows</div>
+  <div class="footer-copy">Anticip Finance · Flutter · macOS</div>
 </footer>
 
 <script>
 const GITHUB_USER='joseph-solier',GITHUB_REPO='anticip_finance_releases';
-const OS_PATTERNS={mac:[{ext:'.dmg',label:'macOS DMG',primary:true},{ext:'-macOS.zip',label:'macOS ZIP',primary:false}],win:[{ext:'-Windows.zip',label:'Windows ZIP',primary:true},{ext:'.exe',label:'Installeur .exe',primary:true}]};
+const OS_PATTERNS={mac:[{ext:'.dmg',label:'macOS DMG',primary:true},{ext:'-macOS.zip',label:'macOS ZIP',primary:false}]};
 function formatDate(iso){return new Date(iso).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}
 function buildButtons(cid,fid,assets,patterns){
   const c=document.getElementById(cid),f=document.getElementById(fid),m=[];
   for(const a of assets)for(const p of patterns){if(a.name.toLowerCase().endsWith(p.ext.toLowerCase())){m.push({...p,url:a.browser_download_url,size:a.size});break;}}
   if(!m.length){c.innerHTML='<div class="loading-state">Aucun fichier trouvé</div>';f.textContent='—';return;}
-  f.innerHTML=m.map(x=>`<a href="${x.url}">${x.label} · ${(x.size/1024/1024).toFixed(1)} Mo</a>`).join('<span style="margin:0 4px;color:var(--border)">·</span>');
+  f.innerHTML=m.map(x=>`<a href="${x.url}">${x.label} · ${(x.size/1024/1024).toFixed(1)} Mo</a>`).join('<span style="margin:0 4px;color:var(--soft)">·</span>');
   c.innerHTML=m.map(x=>`<a class="dl-btn ${x.primary?'primary':'secondary'}" href="${x.url}" download><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Télécharger ${x.label}</a>`).join('');
 }
 async function loadRelease(){
@@ -199,10 +197,9 @@ async function loadRelease(){
     document.getElementById('version-label').textContent=d.tag_name;
     document.getElementById('release-date').textContent=formatDate(d.published_at);
     buildButtons('mac-buttons','mac-formats',d.assets||[],OS_PATTERNS.mac);
-    buildButtons('win-buttons','win-formats',d.assets||[],OS_PATTERNS.win);
   }catch(e){
     document.getElementById('version-label').textContent='—';
-    ['mac-buttons','win-buttons'].forEach(id=>{document.getElementById(id).innerHTML=`<div class="loading-state" style="color:var(--danger)">${e.message}</div>`;});
+    document.getElementById('mac-buttons').innerHTML=`<div class="loading-state" style="color:var(--neg)">${e.message}</div>`;
   }
 }
 loadRelease();
