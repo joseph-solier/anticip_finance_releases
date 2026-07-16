@@ -5,12 +5,12 @@
     <description>Automatic updates for Anticip Finance</description>
     <language>fr</language>
     <item>
-      <title>Version 1.5.1</title>
-      <pubDate>Thu, 16 Jul 2026 13:56:52 +0000</pubDate>
-      <sparkle:version>1.5.1</sparkle:version>
-      <sparkle:shortVersionString>1.5.1</sparkle:shortVersionString>
+      <title>Version 1.5.2</title>
+      <pubDate>Thu, 16 Jul 2026 14:11:04 +0000</pubDate>
+      <sparkle:version>1.5.2</sparkle:version>
+      <sparkle:shortVersionString>1.5.2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>10.14</sparkle:minimumSystemVersion>
-      <enclosure url="https://github.com/joseph-solier/anticip_finance_releases/releases/download/v1.5.1/AnticipFinance-macOS.dmg" length="39390301" type="application/octet-stream"/>
+      <enclosure url="https://github.com/joseph-solier/anticip_finance_releases/releases/download/v1.5.2/AnticipFinance-macOS.dmg" length="39390366" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
